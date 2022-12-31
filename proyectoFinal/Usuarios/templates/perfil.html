@@ -1,0 +1,47 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block tituloPagina %}
+Perfil de usuario
+{% endblock %}
+{% block mensajeHeader %}
+        {{ mensaje }}
+{% endblock %}
+{% block cuerpoPagina %}
+<div class="container bg-white pt-5">
+    <div class="row px-2 pb-0">
+        <p class="col-sm-3 text-center mb-3">
+            <img class="mx-auto d-block w-55 bg-primary img-fluid rounded-circle mb-4 p-3" src="{{ user.perfil.fotoDePerfil.url }}" alt="Image">
+            <div class="media-body">
+                <h5 class="cuenta header">
+                    <p class="text-muted">
+                        Nombre de usuario:
+                    </p>
+                    {{user.username}}
+                </h5>
+                <h5 class="cuenta header">
+                    <p class="text-muted">
+                        Email:
+                    </p>
+                    {{user.email}}
+                </h5>
+            </div>
+        </p>
+        </div>
+        <!-- Formularios-->
+        <p>
+        <form action="{% url 'perfil' %}" method = "POST" enctype="multipart/form-data"> {% csrf_token %}
+
+            <table class="form-group">
+                <legend class="border-bottom mb-4">Editar usuario:</legend>
+                {{ actualizarUsForm.as_table}}
+                {{ actualizarPfForm.as_table}}
+            </table>
+            
+            <input type="submit" value="Actualizar usuario">
+        </form>
+        </p>
+        <!-- Fin Formularios-->
+</div>
+{% endblock %}

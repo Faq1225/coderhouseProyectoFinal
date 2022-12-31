@@ -1,0 +1,78 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block tituloPagina %}
+Bienvenido al blog de Apolo
+{% endblock %}
+
+{% block mensajeHeader %}
+        {{mensaje}}
+{% endblock %}
+
+{% block cuerpoPagina %}
+            <!-- Blog List Start -->
+            <div class="container py-2 px-2 bg-white">
+                <div class="row px-4">
+                    <div class="col-md-0">
+                        <h2 class="border-bottom mb-4">{{articulo.titulo}}</h2>
+                        <div class="d-flex mb-3">
+                            <small class="mr-2 text-muted"><i class="fa fa-calendar-alt"></i> {{articulo.fechaDelPosteo}}</small>
+                            {% if articulo.comentarios.count > 0 %}
+                            <small class="mr-2 text-muted"><i class="fa fa-comments"></i> {{articulo.comentarios.count}} comentarios</small>
+                            {% else %}
+                            <small class="mr-2 text-muted"><i class="fa fa-comments"></i> Todavia no hay comentarios</small>
+                            {% endif %}
+                        </div>
+                        <h5 style="position:static">{{articulo.contenido}}</h5>
+                        {% if user.is_staff %}
+                        <div class="d-flex mb-3">
+                            <small class = "text-muted">
+                                <a class = "ml-2" href="{% url 'articuloActualizar' articulo.slug %}">
+                                    Modificar el articulo
+                                </a>
+                                <a class = "ml-2" href="{% url 'articuloEliminar' articulo.slug %}">
+                                    Eliminar el articulo
+                                </a>
+                            </small>
+                        </div>
+                        {% endif %}
+                        
+                    </div>
+                </div>
+            </div>
+            <!-- Comentarios PRO-->
+            <div class="col-md-15 card mb-4  mt-5 left top" style="padding: 20px;">
+                <div class="col-md-0">
+            <h4>Comentarios</h4>
+            {% for comentario in comentarios %}
+                <p class="font-weight-bold">
+                {{ comentario.usuario }}
+                <span class=" text-muted font-weight-normal">
+                {{ comentario.fechaDelComentario }}
+                </span>
+                <img class="float-left bg-secondary mr-4 p-1" style="max-width: 10%;"; src= "{{ user.perfil.fotoDePerfil.url }}" alt="Image">
+                <p style="position:static">{{comentario.contenido}}
+                </p>
+                <br></br>
+
+            {% endfor %}
+
+            <div class="col-md-15 card mb-4  mt-5 left top" style="padding: 20px;">
+                {% if nuevoComentario %}
+                <div class="alert alert-success" role="alert">
+                  Comentario enviado con éxito!
+                </div>
+                {% else %}
+                <h3>Dejar un comentario</h3>
+                <form method="post" style="padding: 20px;"> {% csrf_token %}
+                  {{ comentariosForm.as_p }}
+                  <button type="submit" class="btn btn-secondary btn-lg">Publicar</button>
+                </form>
+                {% endif %}
+            </div>
+            </div>
+            </div>
+            <!-- Fin comentarios PRO-->
+            <!-- Blog List End -->
+{% endblock %}

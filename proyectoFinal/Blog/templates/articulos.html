@@ -1,0 +1,60 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block tituloPagina %}
+Lista de articulos
+{% endblock %}
+
+{% block mensajeHeader %}
+{{mensaje}}
+{% endblock %}
+
+{% block cuerpoPagina %}
+{% for Articulo in articulos %}
+                <div class="container bg-white pt-2">
+                    <div class="row px-1 pb-5">
+                        <div class="col-md-7">
+                            <h3 class="mt-md-0 px-md-0 mb-0 py-1 bg-white font-weight-bold">{{Articulo.titulo}}</h3>
+                            <div class="d-flex mb-3">
+                                <small class="mr-2 text-muted"><i class="fa fa-calendar-alt"></i> {{Articulo.fechaDelPosteo}}</small>
+                                {% if Articulo.comentarios.count > 0 %}
+                                <small class="mr-2 text-muted"><i class="fa fa-comments"></i> {{Articulo.comentarios.count}} comentarios</small>
+                                {% else %}
+                                <small class="mr-2 text-muted"><i class="fa fa-comments"></i> Todavia no hay comentarios</small>
+                                {% endif %}
+                            </div>
+                            <legend class="border-bottom mb-4">
+                            </legend>
+                            <p>
+                                {{Articulo.contenido|slice:":150"}}
+                            </p>
+                            <a class="btn btn-link p-0" href="{% url 'articuloDetalle' Articulo.slug %}">Leer más <i class="fa fa-angle-right"></i></a>
+                        </div>
+
+                    </div>
+                </div>
+                {% endfor %}
+                <br></br>
+                {% if is_paginated %}
+
+                    {% if page_obj.has_previous %}
+                        <a class="btn btn-outline-info mb-4" href="?page=1">Primer pagina</a>
+                        <a class="btn btn-outline-info mb-4" href="?page= {{ page_obj.previous_page_number }} ">Pagina anterior</a>
+                    {% endif %}
+
+                    {% for num in page_obj.paginator.page_range %}
+                        {% if page_obj.number == num %}
+                            <a class="btn btn-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                        {% elif num > page_obj.number|add:'-3' and num < page_obj.number|add:'3' %}
+                            <a class="btn btn-outline-info mb-4" href="?page={{ num }}">{{ num }}</a>
+                        {% endif %}
+                    {% endfor %}
+
+                    {% if page_obj.has_next %}
+                        <a class="btn btn-outline-info mb-4" href="?page= {{ page_obj.next_page_number }} ">Siguiente pagina</a>
+                        <a class="btn btn-outline-info mb-4" href="?page= {{ page_obj.paginator.num_pages }} ">Ultima pagina</a>
+                    {% endif %}
+
+                {% endif %}
+{% endblock %}

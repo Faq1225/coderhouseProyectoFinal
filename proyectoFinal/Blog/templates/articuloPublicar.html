@@ -1,0 +1,27 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block tituloPagina %}
+Publicar nuevo articulo
+{% endblock %}
+{% block mensajeHeader %}
+<div class="container py-2 px-2">
+    <h4>
+        {{ mensaje }}
+    </h4>
+</div>
+{% endblock %}
+{% block cuerpoPagina %}
+
+<form action="{% url 'articuloPublicar' %}" method = "POST"> {% csrf_token %}
+    
+    <table>
+    {{form}}
+    </table>
+
+    <input type="submit" value="Publicar">
+
+</form>
+
+{% endblock %}

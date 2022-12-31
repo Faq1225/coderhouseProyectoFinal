@@ -1,0 +1,39 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block tituloPagina %}
+Buscar un articulo
+{% endblock %}
+
+{% block mensajeHeader %}
+<div class="container py-4 px-2 bg-white">
+    <h4>
+        {{mensaje}}
+    </h4>
+</div>
+{% endblock %}
+
+{% block cuerpoPagina %}
+
+<h3> Resultados de la busqueda: </h3>
+
+
+    <ul>
+
+
+    {% if articulos %}
+
+    </ul>
+    {% for articulo in articulos %}
+    <h4>Se encontraron los siguientes articulos:</h4>
+    <h6>{{articulo.titulo}}
+    <a class="btn btn-link p-0" href="{% url 'articuloDetalle' articulo.slug %}">Leer <i class="fa fa-angle-right"></i></a>
+    </h6>
+    {% endfor %}
+
+    {% else %}
+    <h5>No se encontro ningun articulo</h5>
+    {% endif %}
+
+{% endblock %}

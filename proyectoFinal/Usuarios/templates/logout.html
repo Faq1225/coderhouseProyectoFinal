@@ -1,0 +1,29 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block tituloPagina %}
+    <div class="container py-0 px-2 bg-primary">
+        <div class="row py-5 px-4">
+            <div class="col-sm-6 text-center text-md-left">
+            <h1 class="mb-3 mb-md-0 text-white font-weight-bold">Logout</h1>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block mensajeHeader %}
+<div class="container py-4 px-2 bg-white">
+    <h4>
+       Has cerrado la sesión
+    </h4>
+</div>
+{% endblock %}
+{% block cuerpoPagina %}
+
+<div class = "border-top pt-3">
+    <small class = "text-muted">
+        Volver a<a class = "ml-2" href="{% url 'login'%}">iniciar sesión
+        </a>
+    </small>
+</div>
+{% endblock %}

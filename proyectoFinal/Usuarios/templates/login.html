@@ -1,0 +1,35 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block tituloPagina %}
+Formulario de Ingreso
+{% endblock %}
+{% block mensajeHeader %}
+<div class="container py-2 px-2">
+    <h4>
+        {{mensaje}}
+    </h4>
+</div>
+{% endblock %}
+{% block cuerpoPagina %}
+<form action="{% url 'login' %}" method = "POST"> {% csrf_token %}
+
+    <table>
+        {{ form }}
+    </table>
+
+    <input type="submit" value="Iniciar sesion">
+
+
+</form>
+
+<div class = "border-top pt-3">
+    <small class = "text-muted">
+        No tienes una cuenta? <a class = "ml-2" href="{% url 'registro'%}">
+            Registrate
+        </a>
+    </small>
+</div>
+
+{% endblock %}

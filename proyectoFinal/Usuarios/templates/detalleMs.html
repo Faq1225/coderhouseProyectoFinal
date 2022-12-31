@@ -1,0 +1,52 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block tituloPagina %}
+Mensajes
+{% endblock %}
+{% block mensajeHeader %}
+<div class="container py-2 px-2">
+    <h4>
+        {{ mensaje }}
+    </h4>
+</div>
+{% endblock %}
+{% block cuerpoPagina %}
+    <h3>Identificador del canal: {{object.id}}</h3>
+    <h1>Mensajes del canal:</h1>
+    {% for mensaje in object.canalmensaje_set.all %}
+
+        {% if request.user == mensaje.usuario %}
+            <p>
+                <strong>
+                    {{mensaje.texto}}
+                </strong>
+                <span>
+                    Lo enviaste tu
+                </span>
+            </p>
+        {% else %}
+            <p>
+                {{mensaje.texto}}
+                <span>
+                    Enviado por: {{mensaje.usuario}}
+                </span>
+            </p>
+        {% endif %}
+    {% endfor %}
+    <h1>Usuarios del canal:</h1>
+    {% for usuarios in object.canalusuario_set.all %}
+        <p>
+            {{usuarios.usuario}}
+        </p>
+    {% endfor %}
+    <form action="{{ request.path }}" method="POST"> {% csrf_token %}
+        {{form.as_p}}
+
+        <button type="submit">
+            Enviar
+        </button>
+    </form>
+
+{% endblock %}

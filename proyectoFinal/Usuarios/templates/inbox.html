@@ -1,0 +1,65 @@
+{% extends "padre.html" %}
+
+{% load static %}
+
+{% block tituloPagina %}
+Inbox - Mensajes
+{% endblock %}
+{% block mensajeHeader %}
+
+{% endblock %}
+{% block cuerpoPagina %}
+
+{% for inbox in inbox %}
+
+    {% for segundousuario in inbox.canalusuario_set.all %}
+    
+
+        {% if segundousuario.usuario == request.user %}
+
+        {% else %}
+            <a href="{% url 'detalleMs' segundousuario.usuario.username %}">
+                <p>
+                {{segundousuario.usuario}}
+                </p>
+                <small>
+                    ({{inbox.canalmensaje_set.count}}) Mensajes
+                </small>
+            </a>
+        {% endif %}
+
+    {% endfor %}
+
+
+    {% if inbox.canalmensaje_set.count != 0 %}
+        <div class="div_ms_inbox">
+            {% if segundousuario.usuario == request.user %}
+
+            {% with ultimo_mensaje=inbox.canalmensaje_set.last %}
+                <p>
+                    Ultimo mensaje: {{ultimo_mensaje.texto}}
+                </p>
+            {% endwith %}
+            
+            {% else %}
+                {% with ultimo_mensaje=inbox.canalmensaje_set.last %}
+                    <p>
+                        Ultimo mensaje: {{ultimo_mensaje.texto}}
+                    </p>
+            {% endwith %}
+            <legend class="border-bottom mb-4"></legend>
+            {% endif %}
+        </div>
+
+    {% endif %}
+
+
+{% empty %}
+
+<h2>
+    Inbox vacio
+</h2>
+
+{% endfor %}
+
+{% endblock %}
