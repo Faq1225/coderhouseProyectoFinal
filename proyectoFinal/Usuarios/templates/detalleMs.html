@@ -5,16 +5,8 @@
 {% block tituloPagina %}
 Mensajes
 {% endblock %}
-{% block mensajeHeader %}
-<div class="container py-2 px-2">
-    <h4>
-        {{ mensaje }}
-    </h4>
-</div>
-{% endblock %}
 {% block cuerpoPagina %}
-    <h3>Identificador del canal: {{object.id}}</h3>
-    <h1>Mensajes del canal:</h1>
+    <h3>Mensajes del canal:</h3>
     {% for mensaje in object.canalmensaje_set.all %}
 
         {% if request.user == mensaje.usuario %}
@@ -35,7 +27,7 @@ Mensajes
             </p>
         {% endif %}
     {% endfor %}
-    <h1>Usuarios del canal:</h1>
+    <h3>Usuarios del canal:</h3>
     {% for usuarios in object.canalusuario_set.all %}
         <p>
             {{usuarios.usuario}}
